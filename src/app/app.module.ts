@@ -3,11 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatContentComponent } from './chat-content/chat-content.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    ChatListComponent,
+    ChatContentComponent
   ],
   imports: [
     BrowserModule
