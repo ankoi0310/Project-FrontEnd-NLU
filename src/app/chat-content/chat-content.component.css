@@ -5,13 +5,16 @@
 	font-family: sans-serif;
 }
 .container {
-	width: 500px;
+	position: absolute;
+	width: 800px;
 	margin: auto;
+	right: 180px;
+	top: 70px;
 }
 .chat {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: 90vh;
 	background: #f1f0e8;
 }
 .chat-header {
@@ -20,24 +23,25 @@
 }
 .profile {
 	width: 100%;
-	background: #514C4C;
+	background: #242526 ;
 	display: flex;
 	align-items: center;
 	height: 60px;
 	padding: 0px 10px;
 	position: relative;
 }
-.profile .pp {
-	width: 50px;
+.profile .pp {	
+	width: 60px;
 	display: inline-block;
 	border-radius: 50%;
-	margin-left: 32px;
+	margin-left: 30px;
+	padding: 5px;
 }
 .profile .arrow {
 	display: inline-block;
 	width: 30px;
 	position: absolute;
-	top: 19px;
+	top: 10px;
 	cursor: pointer;
 }
 .profile h2 {
@@ -64,7 +68,7 @@
 }
 
 .chat-box {
-	background: #2d2a2a;
+	background: #2d2e2e ;
 	background-attachment: fixed;
 	padding-left: 20px;
 	overflow-y: scroll;
@@ -121,15 +125,19 @@
 
 *::-webkit-scrollbar {
 	width: 5px;
+	display: none;
+	padding-right: 10px;
 }
 *::-webkit-scrollbar-track {
-	background: #fff;
+	background: #f1f1f1;
 }
 *::-webkit-scrollbar-thumb {
-	background: rgb(151, 138, 138);
+	background: #aaa ;
+	
 }
 *::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	background: #555 ;
+	
 }
 
 .chat-footer {
@@ -146,39 +154,39 @@
 	width: 100%;
 	height: 50px;
 	border-radius: 60px;
-	margin: 5px;
+	margin: 10px;
 	padding: 10px;
 	outline: none;
 	font-size: 19px;
-	padding-left: 40px;
+	padding-left: 50px;
 	padding-right: 90px;
 	border: 2px solid rgb(42, 193, 219);
-	color: rgb(235, 227, 227);
+	color: #242526 rgb(235, 227, 227);
 	resize: none;
 }
 .chat-footer .mic {
 	display: block;
-	width: 55px;
-	height: 55px;
+	width: 40px;
+	height: 40px;
 	margin-right: 20px;
 }
 
 .chat-footer .emo{
 	display: block;
-	width: 35px;
-	height: 35px;
+	width: 40px;
+	height: 40px;
 	position: absolute;
-	left: 10px;
-	top: 12px;
+	left: 20px;	
+	align-items: center;
 }
 .chat-footer .icons {
 	position: absolute;
-	right: 100px;
-	top: 10px;
+	right: 80px;	
+	align-items: center;
 }
 .chat-footer .icons img{
     display: inline-block;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     margin-left: 5px;
 }
