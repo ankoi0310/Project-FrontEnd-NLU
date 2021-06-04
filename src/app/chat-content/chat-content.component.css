@@ -4,23 +4,18 @@
 	box-sizing: border-box;
 	font-family: sans-serif;
 }
-.container {
-	position: absolute;
-	width: 750px;
-	margin: auto;
-	right: 233px;
-	top: 160px;
-}
+
 .chat {
-	display: flex;
+	position: relative;
 	flex-direction: column;
-	height: 497px;
 	background: #f1f0e8;
 }
+
 .chat-header {
 	display: flex;
 	cursor: pointer;
 }
+
 .profile {
 	width: 100%;
 	background: #242526 ;
@@ -30,6 +25,7 @@
 	padding: 0px 10px;
 	position: relative;
 }
+
 .profile .pp {	
 	width: 60px;
 	display: inline-block;
@@ -68,27 +64,22 @@
 }
 
 .chat-box {
+	height: 60vh;
 	background: #2d2e2e ;
 	background-attachment: fixed;
 	padding-left: 20px;
 	overflow-y: scroll;
-	flex: 1;
 }
+
 .chat-box .img_chat {
 	width: 280px;
 }
 
-.chat-r {
+.chat-r, .chat-l {
 	display: flex;
-}
-.chat-r .sp {
-	flex: 1;
 }
 
-.chat-l {
-	display: flex;
-}
-.chat-l .sp {
+.chat-r .sp, .chat-l .sp {
 	flex: 1;
 }
 
@@ -105,15 +96,19 @@
 	font-size: 18px;
 	color: #fff;
 }
+
 .chat-box .mess-r {
     background: #1a6dea;
 }
+
 .chat-box .emoji {
 	width: 20px;
 }
+
 .chat-box .check {
 	float: right;
 }
+
 .chat-box .check img {
 	width: 20px;
 }
