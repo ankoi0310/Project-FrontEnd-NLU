@@ -3,7 +3,7 @@ import http from 'http';
 import WebSocket from 'ws';
 
 const port = 2001;
-const server = http.createServer(express);
+const server = http.createServer(express());
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws, req) {
@@ -23,6 +23,9 @@ wss.on('connection', function connection(ws, req) {
     })
 })
 
-server.listen(port, function() {
+server.listen(port, function(err) {
+    if (err) {
+        throw err;
+    }
     console.log(`Server is listening on port ${port}!`);
 })
