@@ -9,11 +9,13 @@
 	position: relative;
 	flex-direction: column;
 	background: #fff;
+	height: 480px;
 }
 
 .chat-header {
 	display: flex;
 	cursor: pointer;
+	height: 60px;
 }
 
 .profile {
@@ -21,7 +23,7 @@
 	background: #242526 ;
 	display: flex;
 	align-items: center;
-	height: 60px;
+	
 	padding: 0px 10px;
 	position: relative;
 }
@@ -51,7 +53,7 @@
 	flex: 1;
 }
 .chat-box {
-	height: 60vh;
+	height: 360px;
 	background: #2d2e2e ;
 	background-attachment: fixed;
 	padding-left: 20px;
@@ -129,6 +131,7 @@
 	border-radius: 60px;
 	position: relative;
 	cursor: pointer;
+	height: 60px;
 }
 .chat-footer textarea {
 	display: block;
