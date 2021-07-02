@@ -24,12 +24,6 @@
 	position: relative; 
 }
 
-
-.right .icon {
-	display: inline-block;
-	width: 25px;
-	margin-left: 10px;
-}
 .profile {
 	width: 100%;
 	background: #242526 ;
@@ -55,6 +49,7 @@
 	color: #fff;
 	font-size: 18px;
 }
+
 .profile span {
 	color: #ccc;
 	position: absolute;
@@ -62,13 +57,6 @@
 	left: 70px;
 	font-size: 14px;
     overflow-x: hidden;
-}
-.profile h3 {
-	display: inline-block;
-	line-height: 60px;
-	vertical-align: bottom;
-	color: #fff;
-	font-size: 12px;
 }
 
 .profile .left {
