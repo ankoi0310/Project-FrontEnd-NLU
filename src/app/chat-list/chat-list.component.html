@@ -1,78 +1,35 @@
 <div class="container">
     <div class="chat">
         <div class="chat-list-header">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="text" class="form-control form-control-dark" placeholder="Room Name" aria-label="Room Name">
+            </form>
+            <div class="text-end">
+                <button type="button" class="btn btn-primary me-2" (click)="create()">Create</button>
+                <button type="button" class="btn btn-warning" (click)="join()">Join</button>
+            </div>
         </div>
         <div class="chat-list-box">
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/pp.jpg" class="pp" />
-                    <h2>Huỳnh Văn Hữu Ân</h2>
-                    <span>Thế thì đi chơi thôi</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/siunhan.png" class="pp" />
-                    <h2>Bình Bông</h2>
-                    <span>Xin lỗi, mình nhắn nhầm, cho mình xin lỗi</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/yi.png" class="pp" />
-                    <h2>Việt Cường</h2>
-                    <span>Xin chào, mình tên là Cường, cho mình làm quen bạn nha</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/hoa.png" class="pp" />
-                    <h2>Thành Đề</h2>
-                    <span>Xin chào, mình tên là Thành Đề, cho mình làm quen bạn nha</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/redvelvet.png" class="pp" />
-                    <h2>Đạt Robert</h2>
-                    <span>Xin chào, mình tên là Đạt nè, cho mình làm quen bạn nha</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/bigbang.jpg" class="pp" />
-                    <h2>Lê Minh Chánh</h2>
-                    <span>Hi</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/bts.png" class="pp" />
-                    <h2>Nguyễn Minh Châu</h2>
-                    <span>Hé lô</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/nlu.jpg" class="pp" />
-                    <h2>Quang Huy</h2>
-                    <span>bye</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/donald.png" class="pp" />
-                    <h2>Tạ Vũ Minh Thư</h2>
-                    <span>oke nha</span>
-                </div>
-            </div>
-            <div class="profile">
-                <div class="left">                   
-                    <img src="assets/img/blackpink.jpg" class="pp" />
-                    <h2>Koi</h2>
-                    <span>um</span>
-                </div>
-            </div>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Name 1</h6>
+                        <small class="text-muted">Message 1</small>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Name 2</h6>
+                        <small class="text-muted">Message 2</small>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Name 3</h6>
+                        <small class="text-muted">Message 3</small>
+                    </div>
+                </li>
+              </ul>
         </div>
     </div>
 </div>

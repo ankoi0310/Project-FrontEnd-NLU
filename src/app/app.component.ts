@@ -53,6 +53,10 @@ export class AppComponent implements OnInit {
         }
     }
 
+    static register(data: any) {
+        
+    }
+
     static showMessage(data: any) {
 
     }

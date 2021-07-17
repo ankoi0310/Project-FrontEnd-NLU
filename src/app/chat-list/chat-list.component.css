@@ -8,72 +8,15 @@
 .chat {
 	position: relative;
 	flex-direction: column;
-	background: #f1f0e8;
+	background: #3d3d3d;
 	height: 480px;
 }
 
 .chat-list-header {
-	display: flex;
-	cursor: pointer;
+	display: inline-flex;
 	width: 100%;
 	background: #000000 ;
-	display: flex;
 	align-items: center;
 	height: 60px;
 	padding: 0px 10px;
-	position: relative; 
 }
-
-.profile {
-	width: 100%;
-	background: #242526 ;
-	display: flex;
-	align-items: center;
-	height: 60px;
-	padding: 0px 10px;
-	position: relative;
-}
-
-.profile .pp {	
-	width: 60px;
-	display: inline-block;
-	border-radius: 50%;
-	margin-left: 5px;
-	padding: 5px;
-}
-
-.profile h2 {
-	display: inline-block;
-	line-height: 60px;
-	vertical-align: bottom;
-	color: #fff;
-	font-size: 18px;
-}
-
-.profile span {
-	color: #ccc;
-	position: absolute;
-	top: 42px;
-	left: 70px;
-	font-size: 14px;
-    overflow-x: hidden;
-}
-
-.profile .left {
-	flex: 1;
-}
-
-.chat-list-box {
-	height: 420px;
-	background: #2d2e2e ;
-	background-attachment: fixed;	
-	overflow-y: scroll;
-    cursor: pointer;
-}
-
-*::-webkit-scrollbar {
-	width: 5px;
-	display: none;
-	padding-right: 10px;
-}
-

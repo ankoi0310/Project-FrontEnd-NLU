@@ -5,64 +5,35 @@
 	font-family: sans-serif;
 }
 
-.chat {
-	position: relative;
-	flex-direction: column;
-	background: #fff;
-	height: 480px;
-}
-
-.chat-header {
-	display: flex;
-	cursor: pointer;
+nav {
 	height: 60px;
 }
 
-.profile {
-	width: 100%;
-	background: #242526 ;
-	display: flex;
-	align-items: center;
-	
-	padding: 0px 10px;
-	position: relative;
+nav .navbar-brand {
+	margin-left: 10px;
 }
 
-.profile .pp {	
-	width: 60px;
-	display: inline-block;
-	border-radius: 50%;
-
-	padding: 5px;
-}
-.profile h2 {
-	display: inline-block;
-	line-height: 60px;
-	vertical-align: bottom;
-	color: #fff;
-	font-size: 20px;
+nav .text-end {
+	margin-right: 10px;
 }
 
-.profile .left {
-	flex: 1;
+nav button {
+	width: 60%;
+	height: 50px;
 }
+
 .chat-box {
 	height: 360px;
 	background: #2d2e2e ;
-	background-attachment: fixed;
 	padding-left: 20px;
 	overflow-y: scroll;
-}
-
-.chat-box .img_chat {
-	width: 280px;
 }
 
 .chat-r, .chat-l {
 	display: flex;
 }
 
-.chat-r .sp, .chat-l .sp {
+.sp {
 	flex: 1;
 }
 
@@ -86,19 +57,6 @@
 
 .chat-box .emoji {
 	width: 20px;
-}
-
-.chat-box .check {
-	float: right;
-}
-
-.chat-box .check img {
-	width: 20px;
-}
-.chat-box .check span {
-	color: #fff;
-	font-size: 12px;
-	font-weight: 700px;
 }
 
 *::-webkit-scrollbar {
@@ -126,6 +84,7 @@
 	cursor: pointer;
 	height: 60px;
 }
+
 .chat-footer textarea {
 	display: block;
 	flex: 1;

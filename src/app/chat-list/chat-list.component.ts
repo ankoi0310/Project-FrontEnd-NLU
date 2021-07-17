@@ -12,4 +12,7 @@ export class ChatListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  create(): void {}
+
+  join(): void {}
 }
