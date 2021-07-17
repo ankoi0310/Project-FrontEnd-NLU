@@ -42,13 +42,7 @@
 	color: #fff;
 	font-size: 20px;
 }
-.profile span {
-	color: #ccc;
-	position: absolute;
-	top: 42px;
-	left: 100px;
-	font-size: 14px;
-}
+
 .profile .left {
 	flex: 1;
 }
@@ -116,12 +110,11 @@
 	background: #f1f1f1;
 }
 *::-webkit-scrollbar-thumb {
-	background: #aaa ;
-	
+	background: #aaa ;	
 }
+
 *::-webkit-scrollbar-thumb:hover {
-	background: #555 ;
-	
+	background: #555 ;	
 }
 
 .chat-footer {
@@ -149,6 +142,7 @@
 	color: #242526 rgb(255, 255, 255);
 	resize: none;
 }
+
 .chat-footer .pass {
 	display: block;
 	width: 40px;
