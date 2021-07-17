@@ -8,6 +8,16 @@
                     <span>online</span>
                 </div>
             </div>
+            <div class="navbar" id="menu">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <span class="btn btn-success" (click)="join()"  role="button">Join Room</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger" (click)="leave()" role="button">Leave Room</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="chat-box">
             <div class="chat-r">
