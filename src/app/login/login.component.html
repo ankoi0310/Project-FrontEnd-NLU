@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div id="main">
+    <h1 class="text-center mb-5 pt-5">App Chat - Project FrontEnd NLU</h1>
+    <div class="container d-none" id="loginForm">
+        <div class="row">
+            <div class="col-md-6 login">
+                <h3>Login</h3>
+                <input type="text" class="form-control mb-2" placeholder="Username *" [(ngModel)]="userLogin"/>
+                <input type="password" class="form-control mb-2 " placeholder="Password *" [(ngModel)]="passLogin"/>
+                <button (click)="login()">Login</button>
+            </div>
+            <div class="col-md-6 register">
+                <h3>Register</h3>
+                <input type="text" class="form-control mb-2" placeholder="Username *" [(ngModel)]="userRegister"/>
+                <input type="password" class="form-control mb-2" placeholder="Password *" [(ngModel)]="passRegister"/>
+                <button (click)="register()">Register</button>
+            </div>
+        </div>
+    </div>
+    <div id="btnStart">
+        <button (click)="connect()">Start</button>
+    </div>
+</div>
