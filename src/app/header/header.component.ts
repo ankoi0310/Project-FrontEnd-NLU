@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import 'ws/';
 
 @Component({
     selector: 'app-header',

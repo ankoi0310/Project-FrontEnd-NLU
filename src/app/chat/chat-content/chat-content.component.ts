@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-chat-content',
@@ -12,13 +11,5 @@ export class ChatContentComponent implements OnInit {
 
     ngOnInit(): void {
 
-    }
-
-    join() {
-        AppComponent.join();
-    }
-
-    leave() {
-        AppComponent.leave();
     }
 }

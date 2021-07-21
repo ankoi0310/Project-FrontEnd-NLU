@@ -1,0 +1,18 @@
+.group-chat {
+    height: 100%;
+}
+
+nav {
+    background-color: rgb(95, 95, 95);
+    height: 15%
+}
+
+.list-group {
+    border-radius: 0;
+	height: 90%;
+	overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
