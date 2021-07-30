@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 
 export class ChatService {
+    private count =0;
     groupList: any = [];
     private ws: any;
     private jsonObject = {
@@ -133,14 +134,22 @@ export class ChatService {
             }           
         }
 
-        //Join Room
-        if (receiveMessage.event == 'JOIN_ROOM') {
-            let data = receiveMessage.data;
-            if (receiveMessage.status == 'error') {
-                alert(receiveMessage.mes);
-            } else {
-                console.log(JSON.stringify(receiveMessage));
-            }
-        }
+                //Join Room
+                if (receiveMessage.event == 'JOIN_ROOM') {
+                    let data = receiveMessage.data;
+                 while (this.count<1){
+                     if(receiveMessage.status == 'success'){
+                         this.count +=1;
+                         this.groupList.push({
+                            name: data.name,
+                            mes: 'message',
+                        });
+                        alert(receiveMessage.status); 
+                        console.log(JSON.stringify(receiveMessage));
+                     }
+                 }   
+                    
+                }
+
     };
 }
