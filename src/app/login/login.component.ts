@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     connect = () => {
         this._chatService.connect();
-    }
+    } 
 
     register = () => {
 		this._chatService.register({ "user": this.userRegister, "pass": this.passRegister });
@@ -30,5 +30,5 @@ export class LoginComponent implements OnInit {
 		this._chatService.login({ "user": this.userLogin, "pass": this.passLogin });
 		this.userLogin = "";
 		this.passLogin = "";
-    }
+    }  
 }

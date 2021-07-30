@@ -2,15 +2,14 @@
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
             <a class="navbar-brand ms-2 font-weight-bold text-light" href="#">Group</a>
-            <div>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Type group name">
-                    <button class="btn btn-outline-primary me-2" type="submit">Create</button>
-                    <button class="btn btn-outline-warning me-2" type="submit">Join</button>
-                </form>
+            <div class="d-flex room">
+                    <input class="form-control me-2" type="search" placeholder="Type group name" [(ngModel)] ="nameRoom"/>
+                    <button class="btn btn-outline-primary me-2" (click)="createRoom()">Create</button>
+                    <button class="btn btn-outline-primary me-2" (click)="joinRoom()">Join</button> 
+                              
             </div>
         </div>
-    </nav>
+    </nav> 
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action" *ngFor="let group of groupList">
             <div class="d-flex w-100 justify-content-between">
@@ -19,4 +18,4 @@
             <p class="mb-1 message">{{ group.mes }}</p>
         </a>
     </div>
-</div>
+</div> 

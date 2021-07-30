@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { GroupComponent } from './chat/chat-list/group/group.component';
 import { PersonalComponent } from './chat/chat-list/personal/personal.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { PersonalComponent } from './chat/chat-list/personal/personal.component'
     ChatComponent,
     GroupComponent,
     PersonalComponent
+    
   ],
   imports: [
     BrowserModule,
