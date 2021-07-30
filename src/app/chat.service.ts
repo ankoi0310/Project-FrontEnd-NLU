@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 
 export class ChatService {
+    groupList: any = [];
     private ws: any;
     private jsonObject = {
         action: 'onchat',
@@ -37,18 +38,6 @@ export class ChatService {
         document.getElementById('btnStart')?.classList.add('d-none');
     };
 
-    // disconnect = () => {
-    //     if (this.ws) {
-    //         if (confirm("Do you really want to disconnect?")) {
-    //             this.ws.close();
-    //             return;
-    //         }
-    //     }
-    //     if (confirm("You're not connected.\nDo you want to connect?")) {
-    //         this.connect();
-    //     }
-    // }
-
     register = (data: any) => {
         this.jsonObject.data.event = 'REGISTER';
         this.jsonObject.data.data = data;
@@ -76,8 +65,6 @@ export class ChatService {
         this.jsonObject.data.event = 'CREATE_ROOM';
         this.jsonObject.data.data = data;
         this.ws.send(JSON.stringify(this.jsonObject));
-
-        //console.log(JSON.stringify(this.jsonObject));
     };
 
     joinRoom = (data: any) => {
@@ -123,7 +110,6 @@ export class ChatService {
                 document.getElementById('header')?.classList.remove('d-none');
                 document.getElementById('chat')?.classList.remove('d-none');
                 document.getElementById('login')?.classList.add('d-none');
-                alert(receiveMessage.data);
             }
         }
 
@@ -132,18 +118,22 @@ export class ChatService {
             let data = receiveMessage.data;
             // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
         }
-        // Create
+
+        // Create Room
         if (receiveMessage.event == 'CREATE_ROOM') {
             let data = receiveMessage.data;
             if (receiveMessage.status == 'error') {
                 alert(receiveMessage.mes);
-              //myGlobals.groupList.remove(myGlobals.nameRoom);
-            } else { 
-                alert(receiveMessage);
-                console.log(JSON.stringify(receiveMessage));
+            } else {
+                this.groupList.push({
+                    name: data.name,
+                    mes: 'message',
+                });
+                alert(receiveMessage.status);
             }           
         }
-        //Join
+
+        //Join Room
         if (receiveMessage.event == 'JOIN_ROOM') {
             let data = receiveMessage.data;
             if (receiveMessage.status == 'error') {
