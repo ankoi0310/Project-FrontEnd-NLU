@@ -2,20 +2,18 @@
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
             <a class="navbar-brand ms-2 font-weight-bold text-light" href="#">Personal</a>
-            <div>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Type user name">
-                    <button class="btn btn-outline-primary me-2" type="submit">Create</button>
-                </form>
+            <div class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Username" [(ngModel)]="username">
+                <button class="btn btn-warning me-2" (click)="findPeople()">Find</button>
             </div>
         </div>
     </nav>
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action" *ngFor="let personal of personalList">
+        <button class="list-group-item list-group-item-action" (click)="getPeopleChatMessage(people.name)" *ngFor="let people of peopleList">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ personal.name }}</h5>
+                <h5 class="mb-1">{{ people.name }}</h5>
             </div>
-            <p class="mb-1">{{ personal.mes }}</p>
-        </a>
+            <p class="mb-1">{{ people.mes }}</p>
+        </button>
     </div>
 </div>
