@@ -8,20 +8,21 @@
 
 nav {
 	background-color: #514c4c;
+	height: 8.35%;
 }
 
 .container-fluid div {
 	float: right;
 }
 
-.chat-box {
+#chat-people, #chat-group {
 	height: 100%;
 	background: #2d2e2e ;
 	padding: 0 20px;
 	overflow-y: scroll;
 }
 
-.chat-box div {
+#chat-people div, #chat-group div {
 	display: inline-block;
 }
 

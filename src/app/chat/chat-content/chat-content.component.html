@@ -1,10 +1,13 @@
 <div class="chat-content">
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <span class="navbar-brand ms-4 text-light user" href="#">Chat mate</span>
+            <span class="navbar-brand ms-4 text-light bg-transparent border-0" id="to"></span>
         </div>
     </nav>
-    <div class="chat-box">
+    <div id="chat-people">
+        <p class={{chat.className}} *ngFor="let chat of chatHistory">{{chat.mes}}</p>
+    </div>
+    <div class="d-none" id="chat-group">
         <p class="message send">Chào Ân</p>
         <p class="message receive">Chào bạn</p>
         <p class="message send">Chào Ân </p>
@@ -24,11 +27,9 @@
         <p class="message send">Chào Ân </p>
         <p class="message receive">Chào bạn</p>
     </div>
-
     <div class="chat-footer">
-        <span>To: <b class="user">chat mate</b></span>
-        <textarea id="message" placeholder="Type a message"></textarea>
+        <textarea placeholder="Type a message" [(ngModel)]="message"></textarea>
         <!-- <img src="assets/img/emo.png" class="emo" /> -->
-        <img src="assets/img/tamgiac2.jpg" class="pass" />
+        <img src="assets/img/tamgiac2.jpg" class="pass" (click)="sendMessage()"/>
     </div>
 </div>
