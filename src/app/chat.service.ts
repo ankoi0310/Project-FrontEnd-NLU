@@ -1,14 +1,15 @@
-
 import { Injectable } from '@angular/core';
-//import * as myGlobals from './globals';
-
 @Injectable({
     providedIn: 'root',
-    
+
 })
 
 export class ChatService {
     groupList: any = [];
+    peopleList: any = [];
+    chatHistory: any = [];
+    people: any;
+    user: any;
     private ws: any;
     private jsonObject = {
         action: 'onchat',
@@ -48,7 +49,7 @@ export class ChatService {
         this.jsonObject.data.event = 'LOGIN';
         this.jsonObject.data.data = data;
         this.ws.send(JSON.stringify(this.jsonObject));
-        // this.user.innerHTML = username.value;
+        this.user = data.user;
     };
 
     logout = () => {
@@ -61,6 +62,43 @@ export class ChatService {
         document.getElementById('btnStart')?.classList.remove('d-none');
     };
 
+    findPeople = (data: any) => {
+        this.jsonObject.data.event = 'CHECK_USER';
+        this.jsonObject.data.data = data;
+        if (data.user == this.user) {
+            alert('You are currently logging in');
+        } else {
+            this.ws.send(JSON.stringify(this.jsonObject));
+            this.people = data.user;
+        }
+    }
+
+    getPeopleChatMessage = (name: any) => {
+        this.chatHistory.length = 0;
+        this.jsonObject.data.event = 'GET_PEOPLE_CHAT_MES';
+        this.jsonObject.data.data = {
+            'name': name,
+            'page': 1
+        };
+        this.ws.send(JSON.stringify(this.jsonObject));
+        let to = document.getElementById('to');
+        if (to) {
+            to.innerHTML = name;
+            // to.click();
+        }
+    }
+
+    chatToPeople = (data: any) => {
+        this.jsonObject.data.event = 'SEND_CHAT';
+        this.jsonObject.data.data = {
+            'type': 'people',
+            'to': this.people,
+            'mes': data
+        };
+        this.ws.send(JSON.stringify(this.jsonObject));
+        // chat.innerHTML += "<span>" + user.innerText + "&emsp;:&emsp;" + message.value + "</span><br>";
+    };
+
     createRoom = (data: any) => {
         this.jsonObject.data.event = 'CREATE_ROOM';
         this.jsonObject.data.data = data;
@@ -71,23 +109,6 @@ export class ChatService {
         this.jsonObject.data.event = 'JOIN_ROOM';
         this.jsonObject.data.data = data;
         this.ws.send(JSON.stringify(this.jsonObject));
-    };
-
-    chatToPerson = () => {
-        if (!this.ws) {
-            alert('You are not connected.');
-            return;
-        }
-        let to: any = document.getElementById('to');
-        let message: any = document.getElementById('message');
-        this.jsonObject.data.event = 'SEND_CHAT';
-        this.jsonObject.data.data = {
-            type: 'people',
-            to: to.value,
-            mes: message.value,
-        };
-        this.ws.send(JSON.stringify(this.jsonObject));
-        // chat.innerHTML += "<span>" + user.innerText + "&emsp;:&emsp;" + message.value + "</span><br>";
     };
 
     receiveMessage = (message: any) => {
@@ -110,12 +131,51 @@ export class ChatService {
                 document.getElementById('header')?.classList.remove('d-none');
                 document.getElementById('chat')?.classList.remove('d-none');
                 document.getElementById('login')?.classList.add('d-none');
+                let user = document.getElementById('user');
+                if (user) { user.innerHTML = this.user; }
             }
         }
 
-        // Chat
+        // Check User
+        if (receiveMessage.event == 'CHECK_USER') {
+            if (receiveMessage.data.status) {
+                if (!this.peopleList.some((people: { name: any; mes: any; }) => people.name == this.people)) {
+                    this.peopleList.push({
+                        name: this.people,
+                        mes: ''
+                    });
+                }
+            }
+            else {
+                alert('This account is offline or does not exist.');
+            }
+        }
+
+        // Get People Chat Message
+        if (receiveMessage.event == 'GET_PEOPLE_CHAT_MES') {
+            let data = receiveMessage.data;
+            for (let i = data.length - 1; i >= 0; i--) {
+                let className = data[i].name == this.user ? 'message receive' : 'message send';
+                this.chatHistory.push({
+                    'createAt': data[i].createAt,
+                    'id': data[i].id,
+                    'mes': data[i].mes,
+                    'name': data[i].name,
+                    'to': data[i].to,
+                    'className': className
+                })
+            }
+            console.log(this.chatHistory);
+        }
+
+        // Chat To People
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
+            this.chatHistory.push({
+                'className': 'message receive',
+                'mes': data.mes
+            })
+            console.log(this.chatHistory);
             // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
         }
 
@@ -129,11 +189,10 @@ export class ChatService {
                     name: data.name,
                     mes: 'message',
                 });
-                alert(receiveMessage.status);
-            }           
+            }
         }
 
-        //Join Room
+        // Join Room
         if (receiveMessage.event == 'JOIN_ROOM') {
             let data = receiveMessage.data;
             if (receiveMessage.status == 'error') {
@@ -143,4 +202,6 @@ export class ChatService {
             }
         }
     };
+
+
 }
