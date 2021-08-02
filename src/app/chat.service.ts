@@ -85,7 +85,6 @@ export class ChatService {
         let to = document.getElementById('to');
         if (to) {
             to.innerHTML = name;
-            // to.click();
         }
     }
 
@@ -97,7 +96,6 @@ export class ChatService {
             'mes': data
         };
         this.ws.send(JSON.stringify(this.jsonObject));
-        // chat.innerHTML += "<span>" + user.innerText + "&emsp;:&emsp;" + message.value + "</span><br>";
     };
 
     createRoom = (data: any) => {
@@ -156,28 +154,26 @@ export class ChatService {
         if (receiveMessage.event == 'GET_PEOPLE_CHAT_MES') {
             let data = receiveMessage.data;
             for (let i = data.length - 1; i >= 0; i--) {
-                let className = data[i].name == this.user ? 'message receive' : 'message send';
+                let className = data[i].name == this.user ? 'message send' : 'message receive';
                 this.chatHistory.push({
-                    'createAt': data[i].createAt,
-                    'id': data[i].id,
                     'mes': data[i].mes,
                     'name': data[i].name,
                     'to': data[i].to,
                     'className': className
                 })
             }
-            console.log(this.chatHistory);
         }
 
         // Chat To People
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
-            this.chatHistory.push({
-                'className': 'message receive',
-                'mes': data.mes
-            })
-            console.log(this.chatHistory);
-            // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
+			this.chatHistory.push({
+				'mes': data.mes,
+				'name': data.name,
+				'to': data.to,
+				'className': 'message receive',
+			});
+        //     this.getPeopleChatMessage(data.to);
         }
 
         // Create Room
