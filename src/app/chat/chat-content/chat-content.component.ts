@@ -19,5 +19,5 @@ export class ChatContentComponent implements OnInit {
 	sendMessage = () => {
 		this._chatService.chatToPeople(this.message);
 		this.message = '';
-	}
+	} 
 }

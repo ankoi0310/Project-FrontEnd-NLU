@@ -30,4 +30,4 @@ export class PersonalComponent implements OnInit {
 	getPeopleChatMessage = (name: any) => {
 		this._chatService.getPeopleChatMessage(name);
 	}
-}
+} 

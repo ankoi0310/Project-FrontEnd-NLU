@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
@@ -10,6 +11,7 @@ export class ChatService {
     peopleList: any = [];
     chatHistory: any = [];
     people: any;
+    room: any;
     user: any;
     private ws: any;
     private jsonObject = {
@@ -104,6 +106,7 @@ export class ChatService {
         this.jsonObject.data.event = 'CREATE_ROOM';
         this.jsonObject.data.data = data;
         this.ws.send(JSON.stringify(this.jsonObject));
+        this.room = data.room;
     };
 
     joinRoom = (data: any) => {
@@ -111,6 +114,35 @@ export class ChatService {
         this.jsonObject.data.data = data;
         this.ws.send(JSON.stringify(this.jsonObject));
     };
+
+
+    getRoomChatMessage = (name: any) => {
+        this.chatHistory.length = 0;
+        this.jsonObject.data.event = 'GET_ROOM_CHAT_MES';
+        this.jsonObject.data.data = {
+            'name': name,
+            'page': 1
+        };
+        this.ws.send(JSON.stringify(this.jsonObject));
+        let to = document.getElementById('to');
+        if (to) {
+            to.innerHTML = name;
+            // to.click();
+        }
+    }
+
+    chatToRoom = (data: any) => {
+        this.jsonObject.data.event = 'SEND_CHAT';
+        this.jsonObject.data.data = {
+            'type': 'room',
+            'to': this.room,
+            'mes': data
+        };
+        this.ws.send(JSON.stringify(this.jsonObject));
+        // chat.innerHTML += "<span>" + user.innerText + "&emsp;:&emsp;" + message.value + "</span><br>";
+    };
+
+   
 
     receiveMessage = (message: any) => {
         let receiveMessage = JSON.parse(message.data);
@@ -180,6 +212,7 @@ export class ChatService {
             // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
         }
 
+        
         // Create Room
         if (receiveMessage.event == 'CREATE_ROOM') {
             let data = receiveMessage.data;
@@ -191,7 +224,7 @@ export class ChatService {
                     mes: 'message',
                 });
             }
-        }
+        }  
 
         //Join Room
         if (receiveMessage.event == 'JOIN_ROOM') {
@@ -200,6 +233,7 @@ export class ChatService {
                 if (receiveMessage.status == 'success') {
                     this.count += 1;
                     this.groupList.push({
+                        //name: data.name,
                         name: data.name,
                         mes: 'message',
                     });
@@ -208,6 +242,34 @@ export class ChatService {
                 }
             }
 
+        }
+
+        // Get Room Chat Message
+        if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
+            let data = receiveMessage.data;
+            for (let i = data.length - 1; i >= 0; i--) {
+                let className = data[i].name == this.room.name ? 'message receive' : 'message send';
+                this.chatHistory.push({
+                    'createAt': data[i].createAt,
+                    'id': data[i].id,
+                    'mes': data[i].mes,
+                    'name': data[i].name,
+                    'to': data[i].to,
+                    'className': className
+                })
+            }
+            console.log(this.chatHistory);
+        }
+
+        // Chat To Room
+        if (receiveMessage.event == 'SEND_CHAT') {
+            let data = receiveMessage.data;
+            this.chatHistory.push({
+                'className': 'message receive',
+                'mes': data.mes
+            })
+            console.log(this.chatHistory);
+            // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
         }
 
     };
