@@ -15,14 +15,14 @@ nav {
 	float: right;
 }
 
-#chat-people, #chat-group {
+#chat {
 	height: 100%;
 	background: #2d2e2e ;
 	padding: 0 20px;
 	overflow-y: scroll;
 }
 
-#chat-people div, #chat-group div {
+#chat div {
 	display: inline-block;
 }
 
