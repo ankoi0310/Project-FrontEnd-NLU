@@ -4,28 +4,8 @@
             <span class="navbar-brand ms-4 text-light bg-transparent border-0" id="to"></span>
         </div>
     </nav>
-    <div id="chat-people">
+    <div id="chat">
         <p class={{chat.className}} *ngFor="let chat of chatHistory">{{chat.mes}}</p>
-    </div>
-    <div class="d-none" id="chat-group">
-        <p class="message send">Chào Ân</p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
-        <p class="message send">Chào Ân </p>
-        <p class="message receive">Chào bạn</p>
     </div>
     <div class="chat-footer">
         <textarea placeholder="Type a message" [(ngModel)]="message"></textarea>

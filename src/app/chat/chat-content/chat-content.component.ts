@@ -17,6 +17,15 @@ export class ChatContentComponent implements OnInit {
 	ngOnInit(): void { }
 
 	sendMessage = () => {
+		let name = document.getElementById('user');
+		if (name) {
+			this.chatHistory.push({
+				'mes': this.message,
+				'name': name,
+				'to': this.to,
+				'className': 'message send',
+			});
+		}
 		this._chatService.chatToPeople(this.message);
 		this.message = '';
 	} 
