@@ -133,7 +133,7 @@ export class ChatService {
         this.jsonObject.data.event = 'SEND_CHAT';
         this.jsonObject.data.data = {
             'type': 'room',
-            'to': this.room,
+            'to': data.name,
             'mes': data
         };
         this.ws.send(JSON.stringify(this.jsonObject));
@@ -196,6 +196,20 @@ export class ChatService {
             }
         }
 
+        // Get Room Chat Message
+        if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
+            let data = receiveMessage.data;
+            for (let i = data.length - 1; i >= 0; i--) {
+                let className = data[i].name == data.name ? 'message send' : 'message receive';
+                this.chatHistory.push({
+                    'mes': data[i].mes,
+                    'name': data[i].name,
+                    'to': data[i].to,
+                    'className': className
+                })
+            }
+        }
+
         // Chat To People
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
@@ -238,34 +252,6 @@ export class ChatService {
                 }
             }
 
-        }
-
-        // Get Room Chat Message
-        if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
-            let data = receiveMessage.data;
-            for (let i = data.length - 1; i >= 0; i--) {
-                let className = data[i].name == this.room.name ? 'message receive' : 'message send';
-                this.chatHistory.push({
-                    'createAt': data[i].createAt,
-                    'id': data[i].id,
-                    'mes': data[i].mes,
-                    'name': data[i].name,
-                    'to': data[i].to,
-                    'className': className
-                })
-            }
-            console.log(this.chatHistory);
-        }
-
-        // Chat To Room
-        if (receiveMessage.event == 'SEND_CHAT') {
-            let data = receiveMessage.data;
-            this.chatHistory.push({
-                'className': 'message receive',
-                'mes': data.mes
-            })
-            console.log(this.chatHistory);
-            // chat.innerHTML += "<span>" + data.name + "&emsp;:&emsp;" + data.mes + "</span><br>";
         }
 
     };
