@@ -12,7 +12,7 @@ export class GroupComponent implements OnInit {
     groupList: any;
 
     constructor(private _chatService: ChatService) {
-        this.groupList = _chatService.groupList;
+        this.groupList = this._chatService.groupList;
     }
 
     ngOnInit(): void { }
@@ -24,5 +24,9 @@ export class GroupComponent implements OnInit {
     joinRoom = () => {
         this._chatService.joinRoom({ name: this.nameRoom });
     };
+    
+    getGroupChatMessage = (name: any) => {
+		this._chatService.getGroupChatMessage(name);
+	}
 
 }
