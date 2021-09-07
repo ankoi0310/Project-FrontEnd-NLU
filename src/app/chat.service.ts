@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 })
 
 export class ChatService {
-    private count = 0;
     groupList: any = [];
     peopleList: any = [];
     chatHistory: any = [];
     people: any;
+    group: any;
     user: any;
     private ws: any;
     private jsonObject = {
@@ -27,10 +27,12 @@ export class ChatService {
         }
 
         this.ws = new WebSocket('ws://203.113.148.132:23023/chat/chat');
-        this.ws.onmessage = (message: any) => this.receiveMessage(message);
+        this.ws.onmessage = (message: any) => {
+            console.log(message);
+            this.receiveMessage(message);
+        }
         this.ws.onclose = () => {
             this.ws = null;
-            // alert("Disconnected!!!");
         };
     };
 
@@ -89,6 +91,10 @@ export class ChatService {
     }
 
     chatToPeople = (data: any) => {
+        let to = document.getElementById('to');
+        if (to) {
+            this.people = to.innerHTML;
+        }
         this.jsonObject.data.event = 'SEND_CHAT';
         this.jsonObject.data.data = {
             'type': 'people',
@@ -107,11 +113,27 @@ export class ChatService {
     joinRoom = (data: any) => {
         this.jsonObject.data.event = 'JOIN_ROOM';
         this.jsonObject.data.data = data;
+        this.group = data.name;
         this.ws.send(JSON.stringify(this.jsonObject));
     };
 
+    getGroupChatMessage = (name: any) => {
+        this.chatHistory.length = 0;
+        this.jsonObject.data.event = 'GET_ROOM_CHAT_MES';
+        this.jsonObject.data.data = {
+            'name': name,
+            'page': 1
+        };
+        this.ws.send(JSON.stringify(this.jsonObject));
+        let to = document.getElementById('to');
+        if (to) {
+            to.innerHTML = name;
+        }
+    }
+
     receiveMessage = (message: any) => {
         let receiveMessage = JSON.parse(message.data);
+        console.log(receiveMessage);
 
         // Register
         if (receiveMessage.event == 'REGISTER') {
@@ -137,6 +159,7 @@ export class ChatService {
 
         // Check User
         if (receiveMessage.event == 'CHECK_USER') {
+            // peopleList [{name: "", mes: ""}, {}, {}]
             if (receiveMessage.data.status) {
                 if (!this.peopleList.some((people: { name: any; mes: any; }) => people.name == this.people)) {
                     this.peopleList.push({
@@ -167,13 +190,12 @@ export class ChatService {
         // Chat To People
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
-			this.chatHistory.push({
-				'mes': data.mes,
-				'name': data.name,
-				'to': data.to,
-				'className': 'message receive',
-			});
-        //     this.getPeopleChatMessage(data.to);
+            this.chatHistory.push({
+                'mes': data.mes,
+                'name': data.name,
+                'to': data.to,
+                'className': 'message receive',
+            });
         }
 
         // Create Room
@@ -191,22 +213,32 @@ export class ChatService {
 
         //Join Room
         if (receiveMessage.event == 'JOIN_ROOM') {
-            let data = receiveMessage.data;
-            while (this.count < 1) {
-                if (receiveMessage.status == 'success') {
-                    this.count += 1;
+            if (receiveMessage.status == 'success') {
+                if (!this.groupList.some((group: { name: any; mes: any; }) => group.name == this.group)) {
                     this.groupList.push({
-                        name: data.name,
-                        mes: 'message',
+                        name: this.group,
+                        mes: 'message'
                     });
-                    alert(receiveMessage.status);
-                    console.log(JSON.stringify(receiveMessage));
+                }
+                else {
+                    alert('You are already a member of this group.');
                 }
             }
-
         }
 
+        // Get Group Chat Message
+        if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
+            let data = receiveMessage.data;
+            let chatData = data.chatData;
+            for (let i = chatData.length - 1; i >= 0; i--) {
+                let className = chatData[i].name == this.user ? 'message send' : 'message receive';
+                this.chatHistory.push({
+                    'mes': chatData[i].mes,
+                    'name': chatData[i].name,
+                    'to': chatData[i].to,
+                    'className': className
+                })
+            }
+        }
     };
-
-
 }
