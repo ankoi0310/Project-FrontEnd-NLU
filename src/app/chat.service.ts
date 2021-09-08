@@ -29,13 +29,8 @@ export class ChatService {
         }
 
         this.ws = new WebSocket('ws://203.113.148.132:23023/chat/chat');
-        this.ws.onmessage = (message: any) => {
-            console.log(message);
-            this.receiveMessage(message);
-        }
-        this.ws.onclose = () => {
-            this.ws = null;
-        };
+        this.ws.onmessage = (message: any) => { this.receiveMessage(message); }
+        this.ws.onclose = () => { this.ws = null; };
     };
 
     connect = () => {
@@ -145,7 +140,6 @@ export class ChatService {
    
     receiveMessage = (message: any) => {
         let receiveMessage = JSON.parse(message.data);
-        console.log(receiveMessage);
 
         // Register
         if (receiveMessage.event == 'REGISTER') {
@@ -171,7 +165,6 @@ export class ChatService {
 
         // Check User
         if (receiveMessage.event == 'CHECK_USER') {
-            // peopleList [{name: "", mes: ""}, {}, {}]
             if (receiveMessage.data.status) {
                 if (!this.peopleList.some((people: { name: any; mes: any; }) => people.name == this.people)) {
                     this.peopleList.push({
@@ -201,9 +194,9 @@ export class ChatService {
 
         // Get Room Chat Message
         if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
-            let data = receiveMessage.data;
+            let data = receiveMessage.data.chatData;
             for (let i = data.length - 1; i >= 0; i--) {
-                let className = data[i].name == data.name ? 'message send' : 'message receive';
+                let className = data[i].name == this.user ? 'message send' : 'message receive';
                 this.chatHistory.push({
                     'mes': data[i].mes,
                     'name': data[i].name,
@@ -213,11 +206,11 @@ export class ChatService {
             }
         }
 
-        // Chat To People
+        // Chat To People, Room
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
             let to = document.getElementById('to');
-            if (to && to.textContent == data.name) {
+            if (to && ((to.textContent == data.to && data.type == 1) || (to.textContent == data.name && data.type == 0))) {
                 this.chatHistory.push({
                     'mes': data.mes,
                     'name': data.name,
@@ -226,20 +219,6 @@ export class ChatService {
                 });
             }
         }
-
-        // Chat To Room
-        // if (receiveMessage.event == 'SEND_CHAT') {
-        //     let data = receiveMessage.data;
-        //     let to = document.getElementById('to');
-        //     if (to && to.textContent == data.name) {
-        //         this.chatHistory.push({
-        //             'mes': data.mes,
-        //             'name': data.name,
-        //             'to': data.to,
-        //             'className': 'message receive',
-        //         });
-        //     }
-        // }
 
         // Create Room
         if (receiveMessage.event == 'CREATE_ROOM') {
