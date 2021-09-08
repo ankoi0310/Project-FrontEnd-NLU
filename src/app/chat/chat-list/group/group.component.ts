@@ -24,9 +24,7 @@ export class GroupComponent implements OnInit {
     joinRoom = () => {
         this._chatService.joinRoom({ name: this.nameRoom });
     };
-    
-    getGroupChatMessage = (name: any) => {
-		this._chatService.getGroupChatMessage(name);
+    getRoomChatMessage = (name: any) => {
+		this._chatService.getRoomChatMessage(name);
 	}
-
 }
