@@ -9,6 +9,7 @@ export class ChatService {
     groupList: any = [];
     peopleList: any = [];
     chatHistory: any = [];
+    type: string = "";
     people: any;
     room: any;
     user: any;
@@ -78,6 +79,7 @@ export class ChatService {
     }
 
     getPeopleChatMessage = (name: any) => {
+        this.type = "people";
         this.chatHistory.length = 0;
         this.jsonObject.data.event = 'GET_PEOPLE_CHAT_MES';
         this.jsonObject.data.data = {
@@ -92,15 +94,11 @@ export class ChatService {
     }
 
     chatToPeople = (data: any) => {
-        let to = document.getElementById('to');
-        if (to) {
-            this.people = to.innerHTML;
-        }
         this.jsonObject.data.event = 'SEND_CHAT';
         this.jsonObject.data.data = {
             'type': 'people',
-            'to': this.people,
-            'mes': data
+            'to': data.to,
+            'mes': data.message
         };
         this.ws.send(JSON.stringify(this.jsonObject));
     };
@@ -119,8 +117,8 @@ export class ChatService {
         this.ws.send(JSON.stringify(this.jsonObject));
     };
 
-
     getRoomChatMessage = (name: any) => {
+        this.type = "room";
         this.chatHistory.length = 0;
         this.jsonObject.data.event = 'GET_ROOM_CHAT_MES';
         this.jsonObject.data.data = {
@@ -131,7 +129,6 @@ export class ChatService {
         let to = document.getElementById('to');
         if (to) {
             to.innerHTML = name;
-            // to.click();
         }
     }
 
@@ -139,15 +136,13 @@ export class ChatService {
         this.jsonObject.data.event = 'SEND_CHAT';
         this.jsonObject.data.data = {
             'type': 'room',
-            'to': data.name,
-            'mes': data
+            'to': data.to,
+            'mes': data.message
         };
         this.ws.send(JSON.stringify(this.jsonObject));
-        // chat.innerHTML += "<span>" + user.innerText + "&emsp;:&emsp;" + message.value + "</span><br>";
     };
 
    
-
     receiveMessage = (message: any) => {
         let receiveMessage = JSON.parse(message.data);
         console.log(receiveMessage);
@@ -221,15 +216,31 @@ export class ChatService {
         // Chat To People
         if (receiveMessage.event == 'SEND_CHAT') {
             let data = receiveMessage.data;
-            this.chatHistory.push({
-                'mes': data.mes,
-                'name': data.name,
-                'to': data.to,
-                'className': 'message receive',
-            });
+            let to = document.getElementById('to');
+            if (to && to.textContent == data.name) {
+                this.chatHistory.push({
+                    'mes': data.mes,
+                    'name': data.name,
+                    'to': data.to,
+                    'className': 'message receive',
+                });
+            }
         }
 
-        
+        // Chat To Room
+        // if (receiveMessage.event == 'SEND_CHAT') {
+        //     let data = receiveMessage.data;
+        //     let to = document.getElementById('to');
+        //     if (to && to.textContent == data.name) {
+        //         this.chatHistory.push({
+        //             'mes': data.mes,
+        //             'name': data.name,
+        //             'to': data.to,
+        //             'className': 'message receive',
+        //         });
+        //     }
+        // }
+
         // Create Room
         if (receiveMessage.event == 'CREATE_ROOM') {
             let data = receiveMessage.data;
@@ -248,7 +259,6 @@ export class ChatService {
             if (receiveMessage.status == 'success') {
                 if (!this.groupList.some((room: { name: any; mes: any; }) => room.name == this.room)) {
                     this.groupList.push({
-                        //name: data.name,
                         name: this.room,
                         mes: 'message',
                     });
@@ -256,21 +266,6 @@ export class ChatService {
                 else {
                     alert('You are already a member of this group.');
                 }
-            }
-        }
-
-        // Get Group Chat Message
-        if (receiveMessage.event == 'GET_ROOM_CHAT_MES') {
-            let data = receiveMessage.data;
-            let chatData = data.chatData;
-            for (let i = chatData.length - 1; i >= 0; i--) {
-                let className = chatData[i].name == this.user ? 'message send' : 'message receive';
-                this.chatHistory.push({
-                    'mes': chatData[i].mes,
-                    'name': chatData[i].name,
-                    'to': chatData[i].to,
-                    'className': className
-                })
             }
         }
     };
