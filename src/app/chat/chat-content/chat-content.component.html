@@ -8,8 +8,10 @@
         <p class={{chat.className}} *ngFor="let chat of chatHistory">{{chat.name}}: {{chat.mes}}</p>
     </div>
     <div class="chat-footer">
-        <textarea placeholder="Type a message" [(ngModel)]="message"></textarea>
-        <!-- <img src="assets/img/emo.png" class="emo" /> -->
-        <img src="assets/img/tamgiac2.jpg" class="pass" (click)="sendMessage()"/>
+        <form (ngSubmit)="sendMessage();" onSubmit="return false;">
+            <input class="form-control" type="text" name="message" [(ngModel)]="message" placeholder="Type your message"/>
+            <!-- <img src="assets/img/emo.png" class="emo" /> -->
+            <img src="assets/img/tamgiac2.jpg" class="pass" (click)="sendMessage()"/>
+        </form>
     </div>
 </div>  
