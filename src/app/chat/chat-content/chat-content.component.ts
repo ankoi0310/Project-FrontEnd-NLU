@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from 'src/app/chat.service';
 @Component({
 	selector: 'app-chat-content',
@@ -6,6 +6,7 @@ import { ChatService } from 'src/app/chat.service';
 	styleUrls: ['./chat-content.component.css']
 })
 export class ChatContentComponent implements OnInit {
+	@ViewChild('scrollMe') private myScrollContainer?: ElementRef;
 	chatHistory: any = []
 	message: any
 
@@ -13,7 +14,23 @@ export class ChatContentComponent implements OnInit {
 		this.chatHistory = this._chatService.chatHistory;
 	}
 
-	ngOnInit(): void { }
+	ngOnInit() {
+		this.scrollToBottom();
+	}
+
+	ngAfterViewChecked() {
+		this.scrollToBottom();
+	}
+
+	scrollToBottom(): void {
+		if (this.myScrollContainer) {
+			try {
+				this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+			} catch (err) {
+				
+			}
+		}
+	}
 
 	sendMessage = () => {
 		let to = document.getElementById('to');
