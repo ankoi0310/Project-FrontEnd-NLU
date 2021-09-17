@@ -19,10 +19,12 @@ export class GroupComponent implements OnInit {
 
     createRoom = () => {
         this._chatService.createRoom({ name: this.nameRoom });
+        this.nameRoom = "";
     };
 
     joinRoom = () => {
         this._chatService.joinRoom({ name: this.nameRoom });
+        this.nameRoom = "";
     };
     getRoomChatMessage = (name: any) => {
 		this._chatService.getRoomChatMessage(name);
