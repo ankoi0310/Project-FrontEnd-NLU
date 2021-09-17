@@ -29,7 +29,7 @@ export class ChatService {
         }
 
         this.ws = new WebSocket('ws://203.113.148.132:23023/chat/chat');
-        this.ws.onmessage = (message: any) => { this.receiveMessage(message); }
+        this.ws.onmessage = (message: any) => this.receiveMessage(message);
         this.ws.onclose = () => { this.ws = null; };
     };
 
@@ -55,6 +55,8 @@ export class ChatService {
     logout = () => {
         this.jsonObject.data.event = 'LOGOUT';
         this.ws.send(JSON.stringify(this.jsonObject));
+        this.peopleList.length = 0;
+        this.groupList.length = 0;
         document.getElementById('header')?.classList.add('d-none');
         document.getElementById('chat')?.classList.add('d-none');
         document.getElementById('loginForm')?.classList.add('d-none');
@@ -62,15 +64,16 @@ export class ChatService {
         document.getElementById('btnStart')?.classList.remove('d-none');
     };
 
+    getContactList = () => {
+        this.jsonObject.data.event = 'GET_USER_LIST';
+        this.ws.send(JSON.stringify(this.jsonObject));
+    }
+
     findPeople = (data: any) => {
         this.jsonObject.data.event = 'CHECK_USER';
         this.jsonObject.data.data = data;
-        if (data.user == this.user) {
-            alert('You are currently logging in');
-        } else {
-            this.ws.send(JSON.stringify(this.jsonObject));
-            this.people = data.user;
-        }
+        this.ws.send(JSON.stringify(this.jsonObject));
+        this.people = data.user;
     }
 
     getPeopleChatMessage = (name: any) => {
@@ -140,6 +143,7 @@ export class ChatService {
    
     receiveMessage = (message: any) => {
         let receiveMessage = JSON.parse(message.data);
+        console.log(receiveMessage);
 
         // Register
         if (receiveMessage.event == 'REGISTER') {
@@ -155,11 +159,34 @@ export class ChatService {
             if (receiveMessage.status == 'error') {
                 alert(receiveMessage.mes);
             } else {
+                this.getContactList();
                 document.getElementById('header')?.classList.remove('d-none');
                 document.getElementById('chat')?.classList.remove('d-none');
                 document.getElementById('login')?.classList.add('d-none');
                 let user = document.getElementById('user');
                 if (user) { user.innerHTML = this.user; }
+            }
+        }
+
+        // Get Contact List
+        if (receiveMessage.event == 'GET_USER_LIST') {
+            // data [{name, type, actionTime}, {}]
+            let data = receiveMessage.data;
+            for (let i = 0; i < data.length; i++) {
+                switch (data[i].type) {
+                    case 0:
+                        this.peopleList.push({
+                            name: data[i].name,
+                            mes: ''
+                        });
+                        break;
+                    case 1:
+                        this.groupList.push({
+                            name: data[i].name,
+                            mes: '',
+                        });
+                        break;
+                }
             }
         }
 
@@ -211,12 +238,14 @@ export class ChatService {
             let data = receiveMessage.data;
             let to = document.getElementById('to');
             if (to && ((to.textContent == data.to && data.type == 1) || (to.textContent == data.name && data.type == 0))) {
-                this.chatHistory.push({
-                    'mes': data.mes,
-                    'name': data.name,
-                    'to': data.to,
-                    'className': 'message receive',
-                });
+                if (data.name != data.to) {
+                    this.chatHistory.push({
+                        'mes': data.mes,
+                        'name': data.name,
+                        'to': data.to,
+                        'className': 'message receive',
+                    });
+                }
             }
         }
 
