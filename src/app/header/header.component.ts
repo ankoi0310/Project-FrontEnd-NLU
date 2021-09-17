@@ -12,5 +12,13 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void { }
 
-    logout = () => this._chatService.logout();
+    logout = () => {
+        // let peopleList = document.getElementById('peopleList');
+        // let groupList = document.getElementById('groupList');
+        // if (peopleList && groupList) {
+        //     peopleList.innerHTML = "";
+        //     groupList.innerHTML = "";
+        // }
+        this._chatService.logout();
+    }
 }
